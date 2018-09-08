@@ -1,0 +1,89 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <table>
+    <thead>
+      <tr>
+        <td class="sortable" data-table-index="0">id</td>
+        <td class="sortable" data-table-index="1">latitude</td>
+        <td>longitude</td>
+        <td>city</td>
+        <td>country</td>
+        <td class="sortable" data-table-index="5">randomCrap0</td>
+        <td>randomCrap1</td>
+        <td>randomCrap2</td>
+        <td>randomCrap3</td>
+        <td>randomCrap4</td>
+        <td>randomCrap5</td>
+        <td>randomCrap6</td>
+        <td>randomCrap7</td>
+        <td>randomCrap8</td>
+        <td>randomCrap9</td>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+  <script type="text/javascript" src="data.js"></script>
+  <script type="text/javascript">
+
+    console.log(data);
+
+    document.body.onload = function onLoad() {
+      populateTable(data);
+
+      bindSortingToHeader('td.sortable');
+    }
+
+    function populateTable(data) {
+      const tbody = document.querySelector('tbody');
+
+      data.forEach(row => {
+        tbody.appendChild(createRow(row));
+      });
+    }
+
+    function createRow(rowData) {
+      const tr = document.createElement('tr');
+
+      rowData.forEach(value => {
+        const td = document.createElement('td');
+
+        td.textContent = value;
+
+        tr.appendChild(td);
+      });
+
+      return tr;
+    }
+
+    function bindSortingToHeader(selector) {
+      document.querySelectorAll(selector).forEach(element => {
+        element.addEventListener('click', () => {
+          const index = element.dataset.tableIndex;
+
+          clearTable();
+
+          data = data.sort((value, nextValue) => value[index] - nextValue[index]);
+
+          populateTable(data);
+        }, false);
+      });
+    }
+
+    function clearTable() {
+      const tbody = document.querySelector('tbody');
+
+      tbody.innerHTML = '';
+    }
+  </script>
+</body>
+
+</html>
